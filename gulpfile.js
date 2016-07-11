@@ -5,12 +5,8 @@ var browserSync = require('browser-sync').create();
 // html
 var htmlmin = require('gulp-htmlmin');
 // js
-var babel = require('gulp-babel');
+var webpack = require('webpack-stream');
 var uglify = require('gulp-uglify');
-var rollup = require('rollup-stream');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-//var rename = require('gulp-rename');
 // css
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
@@ -34,6 +30,13 @@ gulp.task('default', ['styles', 'scripts', 'html'], function () {
   browserSync.stream();
 });
 
+gulp.task('html', function() {
+  return gulp.src(path.HTML)
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest(path.DEST))
+    .pipe(browserSync.stream( {match: '**/*.html'} ));
+});
+
 gulp.task('styles', function() {
   return gulp.src(path.CSS)
     .pipe(sourcemaps.init())
@@ -43,36 +46,15 @@ gulp.task('styles', function() {
 		.pipe(concat('bundle.css'))
 		.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.DEST))
+    .pipe(browserSync.stream( {match: '**/*.css'} ));
 });
 
 gulp.task('scripts', function() {
   return gulp.src(path.JS)
-    .pipe(sourcemaps.init())
-    .pipe(babel({ plugins: ["transform-react-jsx"] }))
-    //.pipe(babel({ presets: ['es2015'] }))
-    .pipe(concat('bundle.js'))
-    //.pipe(uglify())
-		.pipe(sourcemaps.write('.'))
-    //.pipe(gulp.dest(path.DEST))
-    .pipe(gulp.dest('.dist/temp/bundle.js'))
-});
-
-gulp.task('html', function() {
-  return gulp.src(path.HTML)
-    .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest(path.DEST))
-});
-
-
-gulp.task('rollup', function() {
-  rollup({
-    entry: './dist/temp/bundle.js',
-    sourceMap: true
-  })
-  .pipe(source('bundle.js', './dist/temp/'))
-  .pipe(buffer())
-  .pipe(sourcemaps.init({loadMaps: true}))
-  //.pipe(rename('bundle.js'))
-  .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('./dist'));
+  .pipe(sourcemaps.init())
+  .pipe(webpack( require('./webpack.config.js') ))
+  .pipe(uglify())
+	.pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest(path.DEST))
+  .pipe(browserSync.stream( {match: '**/*.js'} ));
 });
