@@ -1,3 +1,98 @@
-.supperCLASS {
-  color: white;
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700,400italic);
+
+body {
+  margin: 30px;
+  font-family: 'Roboto', sans-serif;
 }
+
+nav {
+  margin-bottom: 30px;
+}
+
+.navbar-toggler {
+  float: right;
+}
+
+
+.collapsing {
+  clear: both;
+}
+
+.collapse.in .navbar-nav .nav-item,
+.collapsing .navbar-nav .nav-item  {
+  clear: both;
+  width: 100%;
+  margin: 0 15px;
+}
+
+.jumbotron {
+  padding: 1.5rem 1rem 0 1rem;
+}
+
+.btn-margin {
+  margin: 0.75rem;
+}
+
+.btn-margin-bottom {
+  margin-bottom: 1.5rem;
+}
+
+.btn-margin-right {
+  margin-right: 1.5rem;
+}
+
+a.btn,
+a.btn-primary {
+  color: white!important;
+}
+
+form {
+
+  .form-group.row {
+    margin-top: -7.5px;
+  }
+
+  .form-group.row > [class^="col-"],
+  .form-group.row > [class*=" col-"] {
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+  }
+
+  .form-group.row label {
+    margin: 0;
+  }
+}
+
+
+/* component_get_event */
+
+.component_get_event {
+  text-align: center;
+
+  h1, h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  hr {
+    max-width: 30rem;
+  }
+
+  a {
+    margin-top: 1rem;
+  }
+}
+
+/*
+.row {
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+
+.row > [class^="col-"],
+.row > [class*=" col-"] {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+*/

@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
+//var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 // html
 var htmlmin = require('gulp-htmlmin');
@@ -15,7 +15,7 @@ var cleanCSS = require('gulp-clean-css');
 var path = {
   HTML: './src/*.html',
   JS:   './src/js/**/*.js',
-  CSS:  './src/scss/**/*.scss',
+  CSS:  ['./src/scss/**/!(main)*.scss', './src/scss/main.scss'],
   DEST: './dist'
 };
 
@@ -39,22 +39,22 @@ gulp.task('html', function() {
 
 gulp.task('styles', function() {
   return gulp.src(path.CSS)
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
     .pipe(cleanCSS())
 		.pipe(concat('bundle.css'))
-		.pipe(sourcemaps.write('.'))
+		//.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.DEST))
     .pipe(browserSync.stream( {match: '**/*.css'} ));
 });
 
 gulp.task('scripts', function() {
   return gulp.src(path.JS)
-  .pipe(sourcemaps.init())
+  //.pipe(sourcemaps.init())
   .pipe(webpack( require('./webpack.config.js') ))
   .pipe(uglify())
-	.pipe(sourcemaps.write('.'))
+	//.pipe(sourcemaps.write('.'))
   .pipe(gulp.dest(path.DEST))
   .pipe(browserSync.stream( {match: '**/*.js'} ));
 });
