@@ -1,4 +1,5 @@
 # Meet-Up-Event-Planner
+There were used React, Redux, Node.js, JavaScript, Bootstrap, HTML5, CSS3, Gulp, Webpack, LocalStorage, etc.
 
 ##1) The app provides a form for users to create an account. Account creation includes:
 
